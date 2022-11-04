@@ -12,20 +12,6 @@
   <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
 
   <link rel="stylesheet" href="{{ site.baseurl }}/styles.css">
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    var link = document.getElementById('link');
-    // onClick's logic below:
-    link.addEventListener('click', function() {
-        function searchGoogle() {
-        var one = document.getElementById("input1").value;
-        var two = 'https://www.google.com/search?q=site:redblue.wiki ' + one;
-        window.open(two);
-    }
-
-    });
-  }); 
-  </script>
 
   {% if page.excerpt %}
   <meta property="og:description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}"/>
