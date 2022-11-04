@@ -1,3 +1,4 @@
+- up::[[网络基础设施 Network Infrastructure]]-[[网络流量 Network Traffic]]
 - # 1. 基础知识
 	- 两种最常见的网络流量采集方法是网络分路器(TAPs) 和交换机端口镜像(SPANs)
 	- **网络分路器(TAPs)**
