@@ -1,7 +1,7 @@
 ---
 title: 目录-TOCs
 ---
-> 定期将知识库局部内容结构化，输出全局视角
+> 定期将知识库局部内容结构化，输出全局视角。
 
 # [[Blue Team基础设施]]
 - [[网络基础设施 Network Infrastructure]]
