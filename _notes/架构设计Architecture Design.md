@@ -1,0 +1,21 @@
+up::[[Red Team基础设施]]
+- # 1. 功能隔离
+	- 将功能隔离在不同的资产上可以避免被Blue team一窝端：
+		- 钓鱼SMTP
+		- 钓鱼Payload
+		- 长期使用的C2
+		- 短期使用的C2
+		- ...等等
+- # 2. Redirectors
+	- 为了进一步提高系统弹性和隐蔽性，每个后端资产都应该在其前面放置一个redirector，这种方式有两种好处：1.是能够解耦各个功能资产服务；2.是能够达到隐蔽效果。当某一个资产服务被Blue team发现时，无需部署整套后端服务，便可进行迁移会话、重连接后端的资产等。
+	- 常见的redirector类型:
+		- SMTP
+		- Payloads
+		- Web 流量
+		- C2 (HTTP[S]、DNS、等)
+- # 3. 案例
+	- 下面这个样例，使用了功能分离和redirector的设计思路。其中LT DNS C2代表长期的 DNS C2 服务； ST DNS C2代表短期的 DNS C2 服务；ST HTTP C2 代表短期的 HTTP C2 服务。
+	- <img src="/assets/Pasted image 20221104150047.png">
+	- [[CIA 如何实现C&C基础设施]]
+- # 参考
+	- https://github.com/bluscreenofjeff/Red-Team-Infrastructure-Wiki

@@ -1,0 +1,15 @@
+up::[[Red Team能力建设]]
+- # 目录
+	- Reconnaissance
+	- Initial Access
+	- Delivery
+	- Situational Awareness
+	- Credential Dumping
+	- Privilege Escalation
+	- Defense Evasion
+	- Persistence
+	- Lateral Movement
+	- Exfiltration
+	- Miscellaneous
+- # 来源
+	- https://github.com/infosecn1nja/Red-Teaming-Toolkit

@@ -1,0 +1,51 @@
+up::[[Red Team基础设施]]-[[实践参考]]
+- # 背景
+	- Conti是工业领域最活跃的勒索软件之一，Conti背后的团伙参与了很多系列的恶意软件开发。在2021年Conti这个团伙还干了一件让人不得不惧怕的事，那就是破坏了63家运营工业控制系统(ICS) 的公司，其中大部分是制造业。
+	- 此外，Conti的势力还在不断扩大，它还控制了由TrickBot团伙开发的隐秘恶意软件BazarBackdoor，用于破坏高价值目标。就在前不久，Conti勒索软件团伙还接管了TrickBot恶意软件操作项目。
+	- 名为“Conti Leaks ”的乌克兰安全研究人员泄露了6万多条关于Conti勒索软件操作的内部消息。据BleepingComputer报道，该研究人员为Conti团队的内部成员，因此可以访问Conti的XMPP聊天服务器的“ejabberd 数据库”后端。
+	- 本次泄露的数据范围是在2021年1月21日至2022年2月27日区间，涉及393个的JSON文件、60,694条消息惨遭泄露。与此同时，泄露的消息中还包含了有关该团伙内部活动的各种信息，比如姓名、私人数据泄露URL、比特币地址以及有关其操作的讨论。
+	- 泄露内容主要来自：https://share.vx-underground.org/Conti/，里面有很多俄语看起来比较麻烦。
+- # Conti 内部软件 Leak.7z
+	- 该文件夹包含 12 个 Conti 据称是内部软件的 git 存储库，大部分代码似乎都是 Conti 小组使用的开源软件。例如，yii2或Kohana被用作（似乎是）管理面板的一部分。代码大部分是用 PHP 编写的，由Composer管理，除了一个用 Go 编写的工具的存储库。
+- # Conti Rocket Chat Leaks.7z
+	- 包含 Conti 成员的聊天记录，他们在其中讨论目标和通过 Cobalt Strike 执行攻击的一些技巧。
+		- Active Directory Enumeration
+		- SQL Databases Enumeration via sqlcmd。
+		- 如何访问 Shadow Protect SPX (StorageCraft)
+		- 如何创建 NTDS 转储与 vssadmin
+		- 如何打开新的 RDP 端口 1350
+	- 工具包含
+		- Cobalt Strike
+		- Metasploit
+		- PowerView
+		- ShareFinder
+		- AnyDesk
+		- Mimikatz
+- # Conti 截图 2021.7z
+	- <img src="/assets/Pasted image 20221104151343.png">
+	- 在一些泄露的屏幕截图中，可以看到 Conti 在 Kali Linux 中使用 Cobalt Strike。
+- # Conti Toolkit Leak.7z
+	- 其中包含 APT TeamTNT 使用的工具，使用 shell/bash 脚本来针对各种操作系统以及 AWS 和 Kubernetes 的工具。
+- # Conti Trickbot 论坛 Leak.7z
+	- 虽然大多数都包含关于如何横向移动以及如何使用 Trickbot 的说明，但还有一些有意思的东西，如：
+		- 一位成员分享了他的 webshell，标题为 “我使用的最轻、最耐用的 webshel​​l”
+		- 使用了 ZeroLogon 等漏洞
+		- 使用诸如 Kerberoasting 之类的技术来执行他们的攻击
+		- 分享了一些代码来转储 MSSQL 凭据
+		- 一位用户分享了他的 PowerShell 脚本代码，用于在受害者的计算机上安装后门，包括安装 Tor、SSH 和设置防火墙规则
+- # Conti Trickbot Leaks.7z
+	- 据称由“Sergey Loguntsov” https://github.com/loguntsov aka Begemot用 Erlang 编写的两个 Trickbot 服务器端组件。
+- # 培训材料
+	- 包含 12 个具有不同主题的存档文件，包含
+		- 破解
+		- Metasploit
+		- 网络渗透测试
+		- Coblat strike
+		- 用于渗透测试者的 PowerShell
+		- Windows 红队
+		- WMI 攻击（和防御）
+		- SQL 服务器
+		- 活动目录
+		- 逆向工程
+- # 总结
+	- 可以看出来他们也没有使用0day或者定制化工具（大部分和[[Lapsus$组织的手法]]一样都是使用常见的开源/商业化工具，小部分是自己开发的）

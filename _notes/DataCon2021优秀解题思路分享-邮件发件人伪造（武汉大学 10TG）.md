@@ -1,0 +1,50 @@
+up::[[Red Team能力建设]]-[[初始访问 Initial Access]]-[[钓鱼 Phishing]]
+- # 背景
+	- 邮件发件协议主要是SMTP(Simple Mail Transfer Protocol)，但是SMTP协议设计之初并没有考虑到太多安全相关的功能，因此导致邮件发件人伪造的攻击层出不穷。
+	- 一个典型的邮件从发送方编写到接收方看到邮件内容的过程如下图所示
+	- <img src="/assets/Pasted image 20221104155452.png">
+		- 发送方通过SMTP协议发给发送方的MTA(Mail Transmission Agent)
+		- 发送方的MTA通过SMTP协议发给接收方的MTA
+		- 最终接收方使用POP3(Post Office Protocol)或IMAP(Internet Message Access Protocol)协议接收邮件
+	- 在这个过程中传输的邮件有很多个字段都是用来指定发送方身份的
+		- MailFrom SMTP.From, 这个字段可以理解为信封上指定的发件人
+		- From Message.From, 展示给用户看到的信息上的发件人
+		- Sender, 一般在代发邮件中用来标识代发邮件的来源
+	- 这些多种的字段就导致实际邮件服务解析时不同邮件客户端可能对显示的内容处理方案不同，从而就导致了发件人伪造的攻击。
+	- 这种攻击也在APT、钓鱼邮件等攻击中大量存在，因此发件人伪造攻击也是一个十分值得重视的邮件安全问题。
+- # 邮件安全协议
+	- 由于SMTP设计时并没有考虑相关的安全机制，为了保证其安全性陆续推出了SPF、DKIM、DMARC等安全协议。
+	- 对于发件人伪造攻击，我们需要关注的是这些协议分别检查哪些字段，如何利用协议的缺陷绕过对应的安全保护机制
+	- SPF
+		- <img src="/assets/Pasted image 20221104155501.png">
+		- SPF协议是发件人的域名在DNS记录中加入一条TXT记录，其中包含允许的IP地址；
+		- 收件方接收到邮件后检查smtp.mail字段，如果发件人的IP在DNS的TXT记录中，则返回pass
+	- DKIM
+		- <img src="/assets/Pasted image 20221104155506.png">
+		- DKIM是利用到密码学的签名协议，发件方首先需要在DNS记录上增加自己的公钥，发件时使用自己的私钥对邮件的内容进行签名，并将签名的结果写在邮件内容中，当收件人收到信件时向DNS请求公钥对信件内容进行校验。
+		- DKIM中几个比较重要的字段有：
+			- d 表示实际校验的域名
+			- h 表示签名内容的涵盖范围
+			- l 是可选参数，表示body的长度
+		- 其中l这个参数最初的目的是用于一些商业邮件底部的Unsubscribe相关按钮
+		- 指定了l参数的邮件有可能被伪造body
+	- DMAR
+		- <img src="/assets/Pasted image 20221104155514.png">
+		- 由于SPF协议只能保证发件人的IP是否是域名允许的IP，DKIM只能保证邮件的内容没有经过篡改，两者都没有保护最终收件人看到的From字段是否是一个正确且真实的，因此增加了DMARC协议。
+		- DMARC协议会根据SPF、DKIM两者验证的返回结果，以及对From字段做的**一致性检查**，最终给出一个结论，判断这封邮件是应当拒收还是接收。
+- # 发件人伪造常见攻击类型
+	- <img src="/assets/Pasted image 20221104155522.png">
+	- 2021年USENIX的论文中提出了Direct MTA、Shared MTA、Forwarding MTA三种类型的攻击角度；
+	- 另一方面也可以按照2020年USENIX中的分类方法：
+		- Intra-Server
+		- UI-mismatch
+		- ambiguous-replay
+	- 这两篇论文都写的很详细，具体内容在此不赘述
+	- 在我们靶场做题中，主要使用到的思路是对From、Sender、MailFrom等内容进行变形，截断；
+	- 最终的目的是：
+		- MailFrom字段和Auth User保持一致；
+		- From字段在SPF/DKIM校验时与MailFrom一致;
+		- From/Sender字段显示给用户时显示我们希望伪造的内容；
+	- 另外Level5、Level6涉及到USENIX2020中第六章针对DKIM的Replay Attack，这一章写的思路很清楚，并且攻击方法很详细。
+- # 来源
+	- http://datacon.qianxin.com/blog/archives/277

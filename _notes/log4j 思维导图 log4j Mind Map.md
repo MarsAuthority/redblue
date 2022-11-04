@@ -1,0 +1,11 @@
+up::[[专题 Special Topic]]-[[log4j]]
+- # Mind map # 1 : Am I vulnerable to Log4shell?
+	- <img src="/assets/Pasted image 20221104170905.png">
+- # Mind map # 2 : How to detect the vulnerability, from the black box or white box perspective
+	- <img src="/assets/Pasted image 20221104170913.png">
+- # Mind map # 3 : Shielding & mitigations against Log4shell : Patching is one thing, but defence in depth is advised. A few pointers in this mind map can help
+	- <img src="/assets/Pasted image 20221104170921.png">
+- # Mind map # 4 : log4j Response Flow
+	- <img src="/assets/Pasted image 20221104170928.png">
+- # 来源
+	- https://github.com/DickReverse/InfosecMindmaps

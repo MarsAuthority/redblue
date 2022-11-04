@@ -1,0 +1,33 @@
+up::[[行业观察 Industry Research]]-[[Google]]
+- # 背景
+	- 内容来自Google cloud security podcast，EP# 17
+	- https://cloud.withgoogle.com/cloudsecurity/podcast/modern-threat-detection-at-google/
+- # 做客嘉宾
+	- **TimPeacock,** Google Cloud 威胁检测产品经理。
+	- **Anton Chuvakin,** 前Gartner分析师，后来加入Alphabet子公司Chronicle，现Google Cloud 安全解决方案专家。
+	- **Julien Vehent,** Google 检测响应(Detection and Response)团队负责人。
+- # 总结
+	- 威胁检测的定义：**将威胁相关的知识转换为检测能力**（thread detection is really how the **threat knowledge becomes detections**）。
+	- ### Google所处的环境是怎样的？
+		- Google很多业务都上云了，云环境和传统IDC的很大区别在于：
+			- 控制平面（IAM）的不同，泄露AK/SK意味着系统被完全控制。
+			- 云环境下的攻击面要小很多，云平台做了很多secure by default的东西。
+			- 安全团队可以集中力量在高级威胁检测上，而不并浪费时间在基础领域（如漏洞/补丁管理、IOC运营等）。
+	- ### Google是如何将威胁相关的知识转换为检测能力的？
+		- 基本师从安全的三大支柱（人员、流程和技术）来讲的
+			- **人员**
+				- 必须具备代码能力，在云环境下进行威胁检测意味着每天都在写代码。
+				- 拥有好奇心和逻辑思维能力，能不断提出问题，不断问为什么，直到得出一个假设，结果证明存在一个潜在的漏洞。
+				- 类似code review，同一个告警日志需要有多个人来排查，可能会得出不同的结论。
+				- 写检测规则和做应急响应的是同一个人/团队**（如果你不负责设计如何告警，你会真关心它是否在凌晨 02:00 触发吗？）**
+			- **流程**
+				- 工单系统：记录可疑的告警，由人进行分类跟进（误报可在以后进行审查，如对威胁情报进行回溯）。
+				- 持续改进：
+					- 检测工程就是软件工程，会使用单元测试/集成测试。
+					- 红蓝对抗来验证，除了自己的红队，也会使用第三方安全公司（引入外部知识，消除内部红队已知的各种信息）。
+					- 事件驱动，提到了[极光行动](https://en.wikipedia.org/wiki/Operation_Aurora)。
+			- **技术**
+				- 基础能力的建设：足够全的数据源/日志（全量日志可以存好几个月）。
+				- 威胁建模：
+					- 针对业务：与产品或项目的负责人进行实际交谈，并与他们一起进行威胁建模。
+					- 针对通用技术：如使用restul API，可以使用现成的威胁建模。

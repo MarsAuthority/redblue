@@ -1,0 +1,15 @@
+up::[[Red Team能力建设]]-[[初始访问 Initial Access]]-[[命令与控制 Command and Control]]
+- # 背景
+	- 域前置 Domain Fronting 技术已经被主流的云厂商封禁，为了解决这个问题，Erik Hunstad发明了域隐藏Domain Hiding技术。它能实现域前置隐藏真实域名的目的，同时比域前置更灵活，只需要把域名DNS解析托管在Cloudflare，而主机服务器可以托管在任何地方。
+- # TLS1.3+ESNI
+	- 使用带有ESNI（加密的SNI）的TLS1.3请求发送到任意Cloudflare服务器
+	- HTTP请求的Host字段包含隐藏的目标域名（DNS解析托管到Cloudflare）
+	- Cloudflare会把请求转发到隐藏的目标服务器
+	- <img src="/assets/Pasted image 20221104160300.png">
+	- **目前该技术依赖Cloudflare：**
+		- 2020-08-10: Cloudflare开始拒绝同时包含ESNI and SNI的ClientHello数据包
+		- 包含ESNI的ClientHello数据包可以正常请求
+		- 国内无法使用，原因见：https://geneva.cs.umd.edu/posts/china-censors-esni/esni/
+- # 来源
+	- https://github.com/Ridter/DomainHiding
+	- https://docs.google.com/viewerng/viewer?url=https://media.defcon.org/DEF%2520CON%252028/DEF%2520CON%2520Safe%2520Mode%2520presentations/DEF%2520CON%2520Safe%2520Mode%2520-%2520Erik%2520Hunstad%2520-%2520Domain%2520Fronting%2520is%2520Dead%2520Long%2520Live%2520Domain%2520Fronting.pdf

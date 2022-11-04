@@ -1,0 +1,20 @@
+up::[[Red Team基础设施]]
+- 选择具有迷惑性的域名至关重要，如：可以使用expireddomains.net来收集最近过期或已丢弃域名。
+- <img src="/assets/Pasted image 20221104150136.png">
+- 同时要确认域名不会被第三方厂商列入黑名单：
+	- McAfee https://trustedsource.org/en/feedback/url?action=checksingle
+	- Fortiguard http://www.fortiguard.com/iprep
+	- Symantec + BlueCoat http://sitereview.bluecoat.com/sitereview.jsp
+	- Checkpoint (requires free account) https://www.checkpoint.com/urlcat/main.htm
+	- Palo Alto https://urlfiltering.paloaltonetworks.com/
+	- Sophos (submission only; no checking)  https://secure2.sophos.com/en-us/support/contact-support.aspx - Click Submit a Sample -> Web Address
+	- TrendMicro https://global.sitesafety.trendmicro.com/
+	- Brightcloud http://www.brightcloud.com/tools/url-ip-lookup.php
+	- Websense (Forcepoint) http://csi.websense.com/
+	- Lightspeed Systems https://archive.lightspeedsystems.com/
+	- Chameleon https://github.com/mdsecactivebreach/Chameleon
+	- SenderBase https://www.senderbase.org/
+	- MultiBL http://multirbl.valli.org/
+	- MXToolBox - Blacklists https://mxtoolbox.com/blacklists.aspx
+- # 来源
+	- https://github.com/bluscreenofjeff/Red-Team-Infrastructure-Wiki
