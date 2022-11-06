@@ -1,7 +1,7 @@
 up::[[网络基础设施 Network Infrastructure]]-[[网络流量 Network Traffic]]
 - # 1. 基础知识
 	- **X.509 证书：**证书在客户端和服务器之间建立信任以建立 SSL 连接，尝试对服务器进行身份验证（或对客户端进行身份验证的服务器）的客户端知道 X.509 证书的结构，因此知道如何从证书中的字段中提取有关服务器的标识信息，例如 FQDN 或 IP 地址（称为证书中的通用名称或CN）或颁发证书的组织、部门或用户的名称。证书颁发机构 (CA) 必须颁发所有证书。CA 验证客户端或服务器后，CA 颁发证书并使用私钥对其进行签名。
-- # 2. Palo Alto Solution
+- # 2. [[Palo Alto Networks]] Solution
 	- **解密策略：**防火墙必须在其证书信任列表 (CTL) 中拥有服务器根 CA 证书，并使用该根 CA 证书中包含的公钥来验证签名，然后防火墙提供一份由转发信任证书签名的服务器证书的副本，供客户端进行身份验证。
 	- **Outbound SSL traffic：SSL Forward Proxy**
 		- 防火墙是内部客户端和外部服务器之间的中间人。防火墙使用证书将客户端透明地表示给服务器，并将服务器透明地表示给客户端，这样客户端就认为它是直接与服务器通信的（即使客户端会话是与防火墙进行的），服务器也相信它直接与客户端通信（即使服务器会话也与防火墙）。防火墙使用证书将自己建立为客户端-服务器会话的可信第三方（中间人）。
@@ -11,7 +11,7 @@ up::[[网络基础设施 Network Infrastructure]]-[[网络流量 Network Traffic
 		- <img src="/assets/Pasted image 20221104144132.png">
 	- **Tunneled SSH traffic：SSH Proxy**
 		- 在 SSH 代理配置中，防火墙位于客户端和服务器之间。SSH 代理使防火墙能够解密入站和出站 SSH 连接，并确保攻击者不会使用 SSH 对不需要的应用程序和内容进行隧道传输。SSH 解密不需要证书，防火墙在启动时会自动生成用于 SSH 解密的密钥。在启动过程中，防火墙会检查是否存在现有密钥。如果没有，防火墙会生成一个密钥。防火墙使用密钥解密防火墙上配置的所有虚拟系统的 SSH 会话和所有 SSH v2 会话。
-- # 3. Extrahop Solution
+- # 3. [[Extrahop]] Solution
 	- **TLS 1.3发展带来的问题：Perfect Forward Secrecy**
 		- 以前版本的 TLS：使用静态DH密钥交换算法很容易解密。
 		- TLS1.3(PFS) 使用 ECDHE(Elliptic Curve Diffie-Hellman Encryption 密钥协商算法，握手过程中客户端和服务端都需要临时生成椭圆曲线公私钥，这样即使会话密钥被泄露，也无法解密所有会话。
@@ -23,12 +23,12 @@ up::[[网络基础设施 Network Infrastructure]]-[[网络流量 Network Traffic
 		- 隐私保护：遵循HIPAA, PCI, SOX, GDPR等法案，客户需要自己选择要解密的流量。
 		- TLS1.3方案：ExtraHop Reveal(x) 使用轻量级的agent获取每个会话的临时会话密钥，该agent需要安装要解密的每台服务器上；agent通过 PFS 加密通道将解密后的会话安全地传输到 ExtraHop Reveal(x) 设备，在那里它们被安全存储并且只有具有最高管理权限的用户才能访问。
 		- <img src="/assets/Pasted image 20221104144143.png">
-- # 4. Gigamon Solution
+- # 4. [[Gigamon]] Solution
 	- <img src="/assets/Pasted image 20221104144156.png">
 		- **入站加密流量：**证书托管
 		- **出站加密流量：**中间人劫持（本地信任CA）
 	- <img src="/assets/Pasted image 20221104144210.png">
-- # 5. Google Cloud IDS
+- # 5. [[Google]] Cloud IDS
 	- 刚上线不久，可能还未考虑到加密流量的情况
 	- <img src="/assets/Pasted image 20221104144219.png">
 - # 参考资料
